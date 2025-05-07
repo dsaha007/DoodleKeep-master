@@ -1,0 +1,88 @@
+<div class="container addT">
+  <div>
+    <div *ngIf="!isEdit"><h1 style="text-align: center">Add Your Note</h1></div>
+    <div *ngIf="isEdit"><h1 style="text-align: center">Edit Your Note</h1></div>
+    <form class="example-form" [formGroup]="myForm">
+      <div>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Title</mat-label>
+          <input
+            matInput
+            type="text"
+            placeholder="Enter the Title"
+            formControlName="title"
+            autocomplete="off"
+          />
+          <mat-hint style="color: red; margin-left: -10px;"
+            *ngIf="
+              myForm.get('title')?.errors &&
+              myForm.get('title')?.hasError('required') &&
+              myForm.get('title')?.touched
+            "
+            >Title is required</mat-hint
+          >
+        </mat-form-field>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Content</mat-label>
+          <input
+            matInput
+            #message
+            maxlength="230"
+            placeholder="Enter the Content"
+            formControlName="content"
+            autocomplete="off"
+          />
+          <mat-hint align="end">{{ message.value.length }} / 230</mat-hint>
+          <mat-hint
+            style="color: red; margin-left: -10px"
+            *ngIf="
+              myForm.get('content')?.errors &&
+              myForm.get('content')?.hasError('required') &&
+              myForm.get('content')?.touched
+            "
+            >Content is required</mat-hint
+          >
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Priority</mat-label>
+          <mat-select formControlName="priority">
+            <mat-option value="High">High</mat-option>
+            <mat-option value="Medium">Medium</mat-option>
+            <mat-option value="Low">Low</mat-option>
+          </mat-select>
+          <mat-hint
+            style="color: red; margin-left: -10px"
+            *ngIf="
+              myForm.get('priority')?.errors &&
+              myForm.get('priority')?.hasError('required') &&
+              myForm.get('priority')?.touched
+            "
+            >Assign a Priority to Task</mat-hint
+          >
+        </mat-form-field>
+        <div>
+          <button
+            *ngIf="!isEdit"
+            mat-raised-button
+            color="primary"
+            (click)="onAddingTask()"
+            type="submit"
+            [disabled]="myForm.invalid"
+          >
+            Noted
+          </button>
+          <button
+            *ngIf="isEdit"
+            mat-raised-button
+            color="primary"
+            (click)="onEditingTask()"
+            type="submit"
+            [disabled]="myForm.invalid"
+          >
+            Edit Note
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

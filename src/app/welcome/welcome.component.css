@@ -1,0 +1,31 @@
+.wels{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.wels h1{
+    margin-top: 10px;
+}
+
+.intro{
+	display: flex;
+    justify-content: center;
+}
+.intro p{
+	margin-top: 10px;
+}
+
+.intro a{
+	text-decoration: none;
+	cursor: pointer;
+}
+.error{
+    font-size: 12px;
+    color: red;
+    margin-top: -15px;
+    padding-left: 2px;
+}
+.mat-mdc-form-field{
+    width: 100% !important;
+}
