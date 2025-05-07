@@ -34,14 +34,20 @@ export class AddTaskComponent implements OnInit {
   }
 
   onAddingTask() {
-    this.data.onSendRequest(this.myForm.value).subscribe((res) => {
-      if (res) {
-        this.openSnackBar("Task Added","X");
-        this.route.navigate(['notes']);
-      } else {
-        console.log('Error in Send API');
+    console.log('User Token:', this.data.userToken); // Debug the token
+    this.data.onSendRequest(this.myForm.value).subscribe(
+      (res) => {
+        if (res) {
+          this.openSnackBar('Task Added', 'X');
+          this.route.navigate(['notes']);
+        } else {
+          console.log('Error in Send API');
+        }
+      },
+      (error) => {
+        console.error('Error:', error); // Log the error for debugging
       }
-    });
+    );
   }
 
   openSnackBar(message: string, action: string) {
