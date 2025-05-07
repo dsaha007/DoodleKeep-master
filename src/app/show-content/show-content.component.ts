@@ -19,6 +19,7 @@ export class ShowContentComponent implements OnInit {
   content: string = '';
   allData: any = [];
   isUndo: boolean=false;
+  notes: { title: string; content: string; priority: string; collaborators?: string[] }[] = [];
   constructor(
     private data: DataService,
     private route: Router,
@@ -39,14 +40,7 @@ export class ShowContentComponent implements OnInit {
       (res: any) => {
         this.isLoading = false;
         if (res) {
-          Object.keys(res).forEach((x) =>
-            this.data.cards.push({
-              id: x,
-              title: res[x].title,
-              content: res[x].content,
-              priority: res[x].priority,
-            })
-          );
+          this.data.cards = res; // Use the filtered notes
           this.cardShow = this.data.cards;
           this.allData = this.cardShow;
         } else {
@@ -60,7 +54,6 @@ export class ShowContentComponent implements OnInit {
       }
     );
   }
-
 
   onDeleteTask(id: string) {
     const dialogRef =this.dialog.open(AlertComponent, {});

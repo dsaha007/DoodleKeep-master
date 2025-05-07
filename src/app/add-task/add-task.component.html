@@ -84,5 +84,15 @@
         </div>
       </div>
     </form>
+    <div *ngIf="isEdit">
+      <h3>Collaborate on this Note</h3>
+      <form (ngSubmit)="onAddCollaborator()">
+        <mat-form-field appearance="outline">
+          <mat-label>Collaborator Email</mat-label>
+          <input matInput [(ngModel)]="collaboratorEmail" name="collaboratorEmail" required />
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Send Invite</button>
+      </form>
+    </div>
   </div>
 </div>

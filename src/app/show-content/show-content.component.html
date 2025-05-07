@@ -42,47 +42,25 @@
     style="margin-bottom: 20px"
   >
     <mat-card class="example-card">
-      <mat-card-header class="cardTitle">
-        <div>
-          <mat-card-title class="cardsTitle">{{ card.title }}</mat-card-title>
-        </div>
-        <hr />
+      <mat-card-header>
+        <mat-card-title>{{ card.title }}</mat-card-title>
       </mat-card-header>
-      <mat-card-content class="cardContent">
+      <mat-card-content>
         <p>{{ card.content }}</p>
-        <hr />
+        <p>Priority: {{ card.priority }}</p>
+        <p>Collaborators: {{ card.collaborators?.join(', ') || 'None' }}</p>
       </mat-card-content>
       <mat-card-actions>
-        <button
-          mat-stroked-button
-          matTooltip="Task Priority"
-          matTootip="priority"
-          [color]="getColor(card.priority)"
-        >
-          {{ card.priority }}
-        </button>
-        <div>
-          <button
-            mat-icon-button
-            matTooltip="Delete Task"
-            color="warn"
-            (click)="onDeleteTask(card.id)"
-            aria-label="Example icon button with a delete icon"
-            class="deletebtn"
-          >
-            <mat-icon>delete</mat-icon>
-          </button>
-          <button
-            mat-icon-button
-            matTooltip="Edit Task"
-            color="primary"
-            aria-label="Example icon button with a home icon"
-            (click)="onEditTask(card.id)"
-          >
-            <mat-icon>edit_note</mat-icon>
-          </button>
-        </div>
+        <button mat-button (click)="onEditTask(card.id)">Edit</button>
+        <button mat-button (click)="onDeleteTask(card.id)">Delete</button>
       </mat-card-actions>
     </mat-card>
   </div>
+</div>
+
+<div *ngFor="let note of notes">
+  <h3>{{ note.title }}</h3>
+  <p>{{ note.content }}</p>
+  <p>Priority: {{ note.priority }}</p>
+  <p>Collaborators: {{ note.collaborators?.join(', ') || 'None' }}</p>
 </div>

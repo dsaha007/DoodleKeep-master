@@ -27,6 +27,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { environment } from '../environments/environment';
+import { FormsModule } from '@angular/forms';
+
 
 const appRoutes: Routes = [
   { path: 'notes/edit', component: AddTaskComponent, canActivate: [AuthGuard] },
@@ -47,6 +49,7 @@ const appRoutes: Routes = [
     AlertComponent,
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     MatButtonModule,
     MatInputModule,

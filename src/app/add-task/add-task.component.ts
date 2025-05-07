@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router, Routes } from '@angular/router';
 import { DataService } from '../data.service';
 import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-add-task',
   templateUrl: './add-task.component.html',
@@ -12,6 +13,8 @@ import { MatSnackBar, MatSnackBarRef } from '@angular/material/snack-bar';
 export class AddTaskComponent implements OnInit {
   myForm!: FormGroup; //! ye kyun use kiya kyunki bro jab ReactiveFormsModule use kiya n tab error aa gyi between the /matFormModule and ReactiveFormsModule
   isEdit:boolean=false;
+  collaboratorEmail: string = '';
+
   constructor(
     private route: Router,
     private http: HttpClient,
@@ -34,8 +37,13 @@ export class AddTaskComponent implements OnInit {
   }
 
   onAddingTask() {
-    console.log('User Token:', this.data.userToken); // Debug the token
-    this.data.onSendRequest(this.myForm.value).subscribe(
+    const noteData = {
+      ...this.myForm.value,
+      owner: this.data.welcomeId, // Set the owner field
+      collaborators: [], // Initialize collaborators as an empty array
+    };
+  
+    this.data.onSendRequest(noteData).subscribe(
       (res) => {
         if (res) {
           this.openSnackBar('Task Added', 'X');
@@ -45,7 +53,7 @@ export class AddTaskComponent implements OnInit {
         }
       },
       (error) => {
-        console.error('Error:', error); // Log the error for debugging
+        console.error('Error:', error);
       }
     );
   }
@@ -80,6 +88,24 @@ export class AddTaskComponent implements OnInit {
     })
     this.data.isEdit=false;
     this.isEdit=false;
+  }
+
+  onAddCollaborator() {
+    if (!this.collaboratorEmail) {
+      this.openSnackBar('Please enter a valid email', 'X');
+      return;
+    }
+
+    this.data.onAddCollaborator(this.data.singleNoteId, this.collaboratorEmail).subscribe(
+      () => {
+        this.openSnackBar('Collaborator added successfully!', 'X');
+        this.collaboratorEmail = '';
+      },
+      (error) => {
+        console.error('Error adding collaborator:', error);
+        this.openSnackBar('Failed to add collaborator', 'X');
+      }
+    );
   }
 
 }
